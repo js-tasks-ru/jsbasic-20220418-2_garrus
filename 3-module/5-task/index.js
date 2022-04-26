@@ -1,3 +1,10 @@
 function getMinMax(str) {
-  // ваш код...
+  let nums = str.split(" ")
+             .filter(item => !isNaN(parseInt(item)));
+
+  return {
+    min: Math.min(...nums),
+    max: Math.max(...nums),
+  };
 }
+
