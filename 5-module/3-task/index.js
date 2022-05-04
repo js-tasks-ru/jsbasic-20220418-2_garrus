@@ -1,7 +1,8 @@
 function initCarousel() {
   let currentSlide = 0;
   let next = document.querySelector(".carousel__arrow_right"),
-      prev = document.querySelector(".carousel__arrow_left");
+      prev = document.querySelector(".carousel__arrow_left"),
+      carousel = document.querySelector(".carousel");
 
   let totalSlides = document.body.querySelectorAll(".carousel__slide").length,
       slideWidth = document.body.querySelector(".carousel__slide").offsetWidth,
@@ -9,7 +10,7 @@ function initCarousel() {
 
   prev.style.display = "none";
   
-  document.body.addEventListener("click", (e) => {
+  carousel.addEventListener("click", (e) => {
     
     let isNextBtn = !!e.target.closest(".carousel__arrow_right");
     let isPrevBtn = !!e.target.closest(".carousel__arrow_left");
