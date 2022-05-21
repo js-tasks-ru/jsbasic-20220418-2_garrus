@@ -26,7 +26,7 @@ export default class RibbonMenu {
         </button>
 
         <nav class="ribbon__inner">
-          ${categories.map(item => this.createCategory(item))}
+          ${categories.map(item => this.createCategory(item)).join("")}
         </nav>
 
         <button class="ribbon__arrow ribbon__arrow_right ribbon__arrow_visible">
@@ -73,7 +73,10 @@ export default class RibbonMenu {
   initCurrentCategory (container) {
     const links = container.querySelectorAll(".ribbon__item");
 
+    console.log(container)
+
     container.addEventListener('click', (e) => {
+      console.log("container")
       let target = e.target.closest(".ribbon__item");
       if (!target) return
 

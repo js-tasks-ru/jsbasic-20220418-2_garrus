@@ -7,7 +7,7 @@ export default class Modal {
     this.#render();
   }
 
-  #elem = null
+  elem = null
 
   #render = () => {
     this.#createModal();
@@ -15,7 +15,7 @@ export default class Modal {
   }
 
   #createModal = () => {
-    this.#elem = createElement(`
+    this.elem = createElement(`
       <div class="modal">
         <div class="modal__overlay"></div>
         <div class="modal__inner">
@@ -37,23 +37,23 @@ export default class Modal {
   }
 
   open = () => {
-    document.body.append(this.#elem);
+    document.body.append(this.elem);
     document.body.classList.add("is-modal-open");
     document.addEventListener("keydown", this.#closeESC);
   }
 
   setTitle = (title) => {
     this.titleHTML = title;
-    this.#elem.querySelector(".modal__title").textContent = title;
+    this.elem.querySelector(".modal__title").textContent = title;
   }
 
   setBody = (node) => {
     this.bodyHTML = node;
-    this.#elem.querySelector(".modal__body").innerHTML = node.outerHTML;
+    this.elem.querySelector(".modal__body").innerHTML = node.outerHTML;
   }
 
   close = () => {
-    this.#elem.remove();
+    this.elem.remove();
     document.body.classList.remove("is-modal-open");
     document.removeEventListener('keydown', this.#closeESC);
   }
@@ -65,7 +65,7 @@ export default class Modal {
   }
 
   #initBtnClose = () => {
-    const closeBtn = this.#elem.querySelector(".modal__close");
+    const closeBtn = this.elem.querySelector(".modal__close");
 
     closeBtn.addEventListener('click', () => {
       this.close();

@@ -20,9 +20,9 @@ export default class Carousel {
         <div class="carousel__arrow carousel__arrow_left">
           <img src="../../assets/images/icons/angle-left-icon.svg" alt="icon">
         </div>
-    
+
         <div class="carousel__inner">
-          ${slides.map(slide => this.createSlide(slide))}
+          ${slides.map(slide => this.createSlide(slide)).join("")}
         </div>
       </div>
     `);
@@ -56,27 +56,27 @@ export default class Carousel {
     const next = carousel.querySelector(".carousel__arrow_right"),
         prev = carousel.querySelector(".carousel__arrow_left"),
         inner = carousel.querySelector(".carousel__inner");
-  
+
     const totalSlides = carousel.querySelectorAll(".carousel__slide").length;
     prev.style.display = "none";
-    
+
     carousel.addEventListener("click", (e) => {
-      
+
       let isNextBtn = !!e.target.closest(".carousel__arrow_right");
       let isPrevBtn = !!e.target.closest(".carousel__arrow_left");
-  
+
       if (!isNextBtn && !isPrevBtn) return;
 
       const slideWidth = carousel.offsetWidth;
-  
+
       if (isNextBtn && currentSlide !== totalSlides-1) {
         currentSlide === totalSlides-2 ? next.style.display = "none" : prev.style.display = "";
-  
+
         currentSlide++;
         inner.style.transform = `translateX(-${slideWidth*currentSlide}px)`;
       } else if (isPrevBtn && currentSlide !== 0) {
         currentSlide === 1 ? prev.style.display = "none" : next.style.display = "";
-  
+
         currentSlide--;
         inner.style.transform = `translateX(-${slideWidth*currentSlide}px)`;
       }
