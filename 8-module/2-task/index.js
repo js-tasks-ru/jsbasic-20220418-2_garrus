@@ -4,12 +4,13 @@ import ProductCard from '../../6-module/2-task/index.js';
 export default class ProductGrid {
   constructor(products) {
     this.products = products;
+    this.filteredProducts = products;
     this.filters = {};
     this.render();
   }
 
   render() {
-    this.createProductGrid(this.products);
+    this.createProductGrid(this.filteredProducts);
   }
 
   createProductGrid(products) {
@@ -28,33 +29,40 @@ export default class ProductGrid {
   }
 
   updateFilter(filters) {
-    this.filters = filters;
-    this.products = this.products.filter(card => this.filterCards(card));
-    this.render();
+    this.filters = {...this.filters, ...filters};
+    this.filteredProducts = this.products.filter(card => this.filterCards(card));
+    this.updateInner();
   }
 
+  updateInner () {
+    this.elem.innerHTML = createElement(`
+      <div class="products-grid__inner">
+          ${this.filteredProducts.map(card => this.createCards(card)).join("")}
+      </div>
+    `).outerHTML;
+  }
+
+
   filterCards(card) {
-
-
-    if (this.filters.hasOwnProperty('noNuts')) {
-      if (card.nuts === this.filters.noNuts) {
+    if (this.filters["noNuts"]) {
+      if (card.nuts) {
         return false;
       }
     }
 
-    if (this.filters.hasOwnProperty('vegeterianOnly')) {
-      if (card.vegeterian !== this.filters.vegeterianOnly) {
+    if (this.filters['vegeterianOnly']) {
+      if (!card.vegeterian) {
         return false;
       }
     }
 
-    if (card.hasOwnProperty('spiciness') && this.filters.hasOwnProperty('maxSpiciness')) {
+    if (this.filters["maxSpiciness"]) {
       if (card.spiciness > this.filters.maxSpiciness) {
         return false;
       }
     }
 
-    if (card.hasOwnProperty('category') && this.filters.hasOwnProperty('category')) {
+    if (this.filters["category"]) {
       if (card.category !== this.filters.category) {
         return false;
       }

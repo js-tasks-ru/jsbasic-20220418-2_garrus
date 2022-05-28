@@ -2,6 +2,7 @@ import createElement from '../../assets/lib/create-element.js';
 
 export default class RibbonMenu {
   constructor(categories) {
+    this.value = categories[0].id;
     this.categories = categories;
     this.render(this.categories);
   }
@@ -73,12 +74,9 @@ export default class RibbonMenu {
   initCurrentCategory (container) {
     const links = container.querySelectorAll(".ribbon__item");
 
-    console.log(container)
-
     container.addEventListener('click', (e) => {
-      console.log("container")
       let target = e.target.closest(".ribbon__item");
-      if (!target) return
+      if (!target) return;
 
       e.preventDefault();
 
@@ -90,7 +88,8 @@ export default class RibbonMenu {
 
       target.classList.add("ribbon__item_active");
 
-      this.dispatchEvent(container,target);
+      this.value = target.dataset.id;
+      this.dispatchEvent(container, target);
     });
   }
 
