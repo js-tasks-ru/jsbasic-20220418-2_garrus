@@ -21,7 +21,7 @@ export default class StepSlider {
     <div class="slider">
 
       <div class="slider__thumb">
-        <span class="slider__value">0</span>
+        <span class="slider__value">${this.value}</span>
       </div>
 
       <div class="slider__progress"></div>
@@ -45,13 +45,15 @@ export default class StepSlider {
     this.spans = container.querySelectorAll("span");
     this.thumb = container.querySelector(".slider__thumb");
     this.progress = container.querySelector(".slider__progress");
+    this.valueHTML = container.querySelector(".slider__value");
+    this.thumb.style.left = ((this.value) / (this.steps - 1)) * 100 + "%";
+    this.progress.style.width = ((this.value) / (this.steps - 1)) * 100 + "%";
 
     this.thumb.ondragstart = () => false;
     this.thumb.addEventListener("pointerdown", this.#pointerDown);
     document.addEventListener("pointerup", this.#pointerUp);
 
     container.addEventListener("click", this.#mouseClick);
-
   }
 
   #dispatchEvent = (container) => {
@@ -68,6 +70,7 @@ export default class StepSlider {
       }
       if (index === this.value + 1) {
         span.classList.add("slider__step-active");
+        this.valueHTML.textContent = this.value;
       }
     });
   }
@@ -100,6 +103,10 @@ export default class StepSlider {
 
   #pointerUp = (e) => {
     this._elem.classList.remove("slider_dragging");
+
+    this.thumb.style.left = ((this.value) / (this.steps - 1)) * 100 + "%";
+    this.progress.style.width = ((this.value) / (this.steps - 1)) * 100 + "%";
+
     document.removeEventListener("pointermove", this.#pointerMove);
     this.#dispatchEvent(this._elem);
   }
